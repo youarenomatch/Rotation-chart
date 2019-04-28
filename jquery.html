@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="rest.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="main_div">
+    <div class="arrows">
+        <span title="1" class="arrow1"><</span>
+        <span title="0" class="arrow2" style="float: right">></span>
+    </div>
+
+    <ul class="ul_img">
+        <li class="li_img"><img src="images/01.jpg" alt=""></li>
+        <li class="li_img"><img src="images/02.jpg" alt=""></li>
+        <li class="li_img"><img src="images/03.jpg" alt=""></li>
+        <li class="li_img"><img src="images/04.jpg" alt=""></li>
+    </ul>
+</div>
+
+<div style="margin-left: 600px">
+    <div class="div_btn"></div>
+    <div class="div_btn"></div>
+    <div class="div_btn"></div>
+    <div class="div_btn"></div>
+</div>
+</body>
+<script>
+var count=0;
+var timer;
+function showtime() {
+    timer=setInterval(function () {
+        show();
+        count++;
+        if(count==4){
+            count=0;
+        }
+    },2000)
+}
+function show() {
+    $('.li_img').eq(count).stop().fadeIn(1000).siblings('.li_img').fadeOut(1000);
+}
+$(document).ready(function () {
+    showtime();
+    $('.div_btn').hover(function(){
+        //获取当前i的值，并显示，同时还要清除定时器
+        count = $(this).index();
+        show();
+        clearInterval(timer);
+    },function(){
+        //
+        showtime();
+    });
+
+    //鼠标点击左侧的箭头
+    $('.arrow1').click(function(){
+        clearInterval(timer);
+        if(count == 0){
+            count = 4;//注意此时i的值
+        }
+        count--;
+        show();
+        showtime();
+    });
+
+    //鼠标点击右侧的箭头
+    $('.arrow2').click(function(){
+        clearInterval(timer);
+        if(count == 4){
+            count = -1;//注意此时i的值
+        }
+        count++;
+        show();
+        showtime();
+    });
+})
+</script>
+</html>
